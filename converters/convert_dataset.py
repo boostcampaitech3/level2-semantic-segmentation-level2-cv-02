@@ -134,7 +134,7 @@ class CustomDataLoader(Dataset):
             # Masks: size가 (height, width)인 2D
             # 각각의 pixel 값에는 category id를 할당
             masks = np.zeros((image_infos["height"], image_infos["width"]))
-            anns = sorted(anns, key=lambda idx : idx['area'], reverse=True)
+            anns = sorted(anns, key=lambda idx: idx['area'], reverse=True)
             for i in range(len(anns)):
                 className = get_classname(anns[i]['category_id'], cats)
                 pixel_value = category_names.index(className)
@@ -165,9 +165,9 @@ if __name__ == '__main__':
     # Copy images
     copy_images(TRAIN_JSON, dir_lists[0])
     copy_images(VAL_JSON, dir_lists[1])
-    copy_images(TEST_JSON, dir_lists[-1])
+    copy_images(TEST_JSON, dir_lists[4])
 
-    # Create masks(annotations)
+    # Create masks
     create_mask(TRAIN_JSON, dir_lists[2])
     create_mask(VAL_JSON, dir_lists[3])
     print('Done!')

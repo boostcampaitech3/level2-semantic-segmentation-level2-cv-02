@@ -19,7 +19,7 @@ from options import seed_all, wandb_init, get_cfg, make_predictions
 
 
 BASE_EPOCHS = 0
-EPOCHS = 1 - BASE_EPOCHS
+EPOCHS = 100 - BASE_EPOCHS
 
 if __name__ == '__main__':
     # Init
@@ -66,6 +66,6 @@ if __name__ == '__main__':
         shuffle=False
     )
 
-    output = single_gpu_test(model, data_loader, show_score_thr=0.05)
+    output = single_gpu_test(model, data_loader)
     torch.save(output, './output.tmp')
     make_predictions(output, cfg, f"./epoch{EPOCHS + BASE_EPOCHS}.csv")
