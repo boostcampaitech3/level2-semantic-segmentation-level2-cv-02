@@ -39,8 +39,8 @@ def wandb_init() -> None:
     wandb.init(project=WANDB_PROJECT, entity=WANDB_ENTITY, name=WANDB_RUN)
 
 
-def get_cfg(loc: str, epochs: int):
-    cfg = Config.fromfile(loc)
+def get_cfg(epochs: int):
+    cfg = Config.fromfile(CONFIG_PATH)
     cfg.log_config.hooks[1].init_kwargs.project = WANDB_PROJECT
     cfg.log_config.hooks[1].init_kwargs.entity = WANDB_ENTITY
     cfg.log_config.hooks[1].init_kwargs.name = WANDB_RUN
@@ -48,11 +48,11 @@ def get_cfg(loc: str, epochs: int):
     return cfg
 
 
-def make_predictions(output, cfg, loc: str):
+def make_predictions(output, cfg, loc: str) -> None:
     prediction_strings = []
     file_names = []
 
-    coco = COCO(os.path.join(cfg.data.test.ann_dir, 'test.json'))
+    coco = COCO(os.path.join(cfg.data_root, 'test.json'))
 
     for i, out in enumerate(output):
         image_info = coco.loadImgs(coco.getImgIds(imgIds=i))[0]
@@ -62,6 +62,6 @@ def make_predictions(output, cfg, loc: str):
         prediction_strings.append(prediction_string)
 
     submission = pd.DataFrame()
-    submission['PredictionString'] = prediction_strings
     submission['image_id'] = file_names
+    submission['PredictionString'] = prediction_strings
     submission.to_csv(loc, index=False)

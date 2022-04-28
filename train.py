@@ -14,7 +14,7 @@ from mmcv.parallel import MMDataParallel
 
 import wandb
 
-from options import WANDB_RUN, CONFIG_PATH
+from options import WANDB_RUN
 from options import seed_all, wandb_init, get_cfg, make_predictions
 
 
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     seed_all(42)
     wandb_init()
 
-    cfg = get_cfg(CONFIG_PATH, EPOCHS)
+    cfg = get_cfg(EPOCHS)
 
     model = build_segmentor(cfg.model)
     if BASE_EPOCHS == 0:
@@ -67,5 +67,4 @@ if __name__ == '__main__':
     )
 
     output = single_gpu_test(model, data_loader)
-    torch.save(output, './output.tmp')
     make_predictions(output, cfg, f"./epoch{EPOCHS + BASE_EPOCHS}.csv")

@@ -12,7 +12,6 @@ from mmcv.parallel import MMDataParallel
 
 import argparse
 
-from options import CONFIG_PATH
 from options import get_cfg, make_predictions
 
 
@@ -22,7 +21,7 @@ if __name__ == '__main__':
     parser.add_argument('epoch', type=int)
     args = parser.parse_args()
 
-    cfg = get_cfg(CONFIG_PATH, args.epoch)
+    cfg = get_cfg(args.epoch)
 
     dataset = build_dataset(cfg.data.test)
 
@@ -41,5 +40,5 @@ if __name__ == '__main__':
         shuffle=False
     )
 
-    output = single_gpu_test(model, data_loader, show_score_thr=0.05)
+    output = single_gpu_test(model, data_loader)
     make_predictions(output, cfg, f"./epoch{args.epoch}.csv")
