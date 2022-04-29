@@ -20,7 +20,7 @@ import wandb
 
 WANDB_PROJECT = "trash_segmentation_nestiank"
 WANDB_ENTITY = "bucket_interior"
-WANDB_RUN = "TestRun"
+WANDB_RUN = "Swin_Baseline_Raw"
 
 CONFIG_PATH = '/opt/ml/input/code/configs/modified_swin_large.py'
 
@@ -44,6 +44,7 @@ def get_cfg(epochs: int):
     cfg.log_config.hooks[1].init_kwargs.project = WANDB_PROJECT
     cfg.log_config.hooks[1].init_kwargs.entity = WANDB_ENTITY
     cfg.log_config.hooks[1].init_kwargs.name = WANDB_RUN
+    cfg.lr_config.step = [int(epochs * 0.7), int(epochs * 0.8)]
     cfg.runner.max_epochs = epochs
     return cfg
 
@@ -57,6 +58,7 @@ def make_predictions(output, cfg, loc: str) -> None:
     for i, out in enumerate(output):
         image_info = coco.loadImgs(coco.getImgIds(imgIds=i))[0]
         prediction_string = ' '.join(str(pred) for pred in out)
+        prediction_string = prediction_string.replace('[', '').replace(']', '')
 
         file_names.append(image_info['file_name'])
         prediction_strings.append(prediction_string)
