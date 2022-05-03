@@ -5,10 +5,11 @@ _base_ = [
     '/opt/ml/input/code/mmsegmentation/configs/_base_/schedules/schedule_320k.py'
 ]
 
-work_dir = '/opt/ml/input/code'
+work_dir = '/opt/ml/input/code/mmsegmentation/work_dir'
 
 model = dict(
     pretrained='/opt/ml/input/code/mmsegmentation/pretrained/upernet_beit-large_fp16_8x1_640x640_160k_ade20k-8fc0dd5d.pth',
+    # pretrained=None,
     backbone=dict(
         type='BEiT',
         img_size=(512, 512),
@@ -45,7 +46,7 @@ lr_config = dict(
     min_lr=0.0,
     by_epoch=False)
 
-data = dict(samples_per_gpu=1)
+# data = dict(samples_per_gpu=1)
 optimizer_config = dict(
     type='GradientCumulativeFp16OptimizerHook', cumulative_iters=2)
 
