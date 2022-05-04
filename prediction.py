@@ -40,5 +40,5 @@ if __name__ == '__main__':
         shuffle=False
     )
 
-    output = single_gpu_test(model, data_loader)
+    output = single_gpu_test(model, data_loader, inference=True)
     make_predictions(output, cfg, f"./epoch{args.epoch}.csv")

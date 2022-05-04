@@ -19,7 +19,7 @@ from options import seed_all, wandb_init, get_cfg, make_predictions
 
 
 BASE_EPOCHS = 0
-EPOCHS = 100 - BASE_EPOCHS
+EPOCHS = 40 - BASE_EPOCHS
 
 if __name__ == '__main__':
     # Init
@@ -38,8 +38,8 @@ if __name__ == '__main__':
         # Learning from the checkpoint
         assert BASE_EPOCHS > EPOCHS, "The original checkpoint will be overwritten."
         assert BASE_EPOCHS > cfg.lr_config.step[1], "Learning rate should be considered carefully."
-        cfg.optimizer.lr = 1e-6
-        cfg.lr_config = None
+        # cfg.optimizer.lr = 1e-6
+        # cfg.lr_config = None
 
         checkpoint_path = f"./epoch_{BASE_EPOCHS}.pth"
         checkpoint = load_checkpoint(model, checkpoint_path, map_location='cpu')
@@ -66,5 +66,5 @@ if __name__ == '__main__':
         shuffle=False
     )
 
-    output = single_gpu_test(model, data_loader)
+    output = single_gpu_test(model, data_loader, inference=True)
     make_predictions(output, cfg, f"./epoch{EPOCHS + BASE_EPOCHS}.csv")
