@@ -25,11 +25,11 @@ model = dict(
     ),
     decode_head=dict(
         in_channels=[192, 384, 768, 1536], # Modified
-        num_classes=10 # Modified
+        num_classes=11 # Modified
     ),
     auxiliary_head=dict(
         in_channels=768, # Modified
-        num_classes=10 # Modified
+        num_classes=11 # Modified
     ))
 
 optimizer = dict(type='AdamW', lr=0.0001, betas=(0.9, 0.999), weight_decay=0.05,
