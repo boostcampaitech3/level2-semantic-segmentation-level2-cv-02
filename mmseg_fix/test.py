@@ -4,7 +4,7 @@
 #
 
 
-# Modify this file in mmsegmentation/apis as below
+# Modify this file in mmsegmentation/mmseg/apis as below
 
 import os.path as osp
 import pickle

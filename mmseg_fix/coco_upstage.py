@@ -4,7 +4,7 @@
 #
 
 
-# Insert this file in mmsegmentation/mmseg/datasets
+# Insert this file into mmsegmentation/mmseg/datasets
 # Modify __init__.py also
 
 from .builder import DATASETS
