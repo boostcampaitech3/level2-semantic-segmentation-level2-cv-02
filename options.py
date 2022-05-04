@@ -62,6 +62,7 @@ def make_predictions(output, cfg, loc: str) -> None:
         image_info = coco.loadImgs(coco.getImgIds(imgIds=i))[0]
         prediction_string = ' '.join(str(pred) for pred in out)
         prediction_string = prediction_string.replace('[', '').replace(']', '')
+        prediction_string = prediction_string.replace('"', '').replace('\n', '')
 
         file_names.append(image_info['file_name'])
         prediction_strings.append(prediction_string)
