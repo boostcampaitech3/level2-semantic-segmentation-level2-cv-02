@@ -1,7 +1,7 @@
 # Modified from
 # https://github.com/SwinTransformer/Swin-Transformer-Semantic-Segmentation/blob/main/configs/_base_/default_runtime.py
 
-checkpoint_config = dict(max_keep_ckpts=100, interval=2)
+checkpoint_config = dict(max_keep_ckpts=1000, interval=4)
 log_config = dict(
     interval=50,
     hooks=[

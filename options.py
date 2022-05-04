@@ -20,7 +20,7 @@ import wandb
 
 WANDB_PROJECT = "trash_segmentation_nestiank"
 WANDB_ENTITY = "bucket_interior"
-WANDB_RUN = "Swin_Baseline_Raw"
+WANDB_RUN = "Swin_Checkpoint"
 
 CONFIG_PATH = '/opt/ml/input/code/configs/modified_swin_large.py'
 
@@ -56,6 +56,9 @@ def make_predictions(output, cfg, loc: str) -> None:
     coco = COCO(os.path.join(cfg.data_root, 'test.json'))
 
     for i, out in enumerate(output):
+        if i % 50 == 0:
+            print('Iteration', i + 1)
+
         image_info = coco.loadImgs(coco.getImgIds(imgIds=i))[0]
         prediction_string = ' '.join(str(pred) for pred in out)
         prediction_string = prediction_string.replace('[', '').replace(']', '')
