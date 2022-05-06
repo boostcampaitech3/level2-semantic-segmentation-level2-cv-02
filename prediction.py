@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     data_loader = build_dataloader(
         dataset,
-        samples_per_gpu=1,
+        samples_per_gpu=8,
         workers_per_gpu=8,
         dist=False,
         shuffle=False

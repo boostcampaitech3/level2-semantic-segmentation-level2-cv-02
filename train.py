@@ -19,7 +19,7 @@ from options import seed_all, wandb_init, get_cfg, make_predictions
 
 
 BASE_EPOCHS = 0
-EPOCHS = 40 - BASE_EPOCHS
+EPOCHS = 80 - BASE_EPOCHS
 
 if __name__ == '__main__':
     # Init
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
     data_loader = build_dataloader(
         datasets[1],
-        samples_per_gpu=1,
+        samples_per_gpu=8,
         workers_per_gpu=8,
         dist=False,
         shuffle=False

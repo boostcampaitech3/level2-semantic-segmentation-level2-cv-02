@@ -66,16 +66,13 @@ def single_gpu_test(model,
     results = []
     dataset = data_loader.dataset
     prog_bar = mmcv.ProgressBar(len(dataset))
-    for i, data in enumerate(data_loader):
+    for _, data in enumerate(data_loader):
         with torch.no_grad():
-            if inference: # Modified
-                result = model(return_loss=False, rescale=False, **data) # Modified
-            else: # Modified
-                result = model(return_loss=False, **data) # Modified
+            result = model(return_loss=False, rescale=(not inference), **data) # Modified
 
+        img_metas = data['img_metas'][0].data[0]
         if show or out_dir:
             img_tensor = data['img'][0]
-            img_metas = data['img_metas'][0].data[0]
             imgs = tensor2imgs(img_tensor, **img_metas[0]['img_norm_cfg'])
             assert len(imgs) == len(img_metas)
 
@@ -101,15 +98,22 @@ def single_gpu_test(model,
         if isinstance(result, list):
             if efficient_test:
                 result = [np2tmp(_) for _ in result]
-            results.extend(result)
+            for i, pred in enumerate(result):
+                image_id = img_metas[i]['ori_filename'][:4]
+                results.append(dict(id=image_id, pred=pred))
         else:
             if efficient_test:
                 result = np2tmp(result)
-            results.append(result)
+            image_id = img_metas[0]['ori_filename'][:4]
+            results.append(dict(id=image_id, pred=result))
 
         batch_size = data['img'][0].size(0)
         for _ in range(batch_size):
             prog_bar.update()
+
+    results = sorted(results, key=lambda x: x['id'])
+    results = [x['pred'] for x in results]
+
     return results
 
 
