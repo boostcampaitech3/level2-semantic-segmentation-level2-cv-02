@@ -20,7 +20,7 @@ import wandb
 
 WANDB_PROJECT = "trash_segmentation_nestiank"
 WANDB_ENTITY = "bucket_interior"
-WANDB_RUN = "Swin_Checkpoint"
+WANDB_RUN = "Swin_Tuned"
 
 CONFIG_PATH = '/opt/ml/input/code/configs/modified_swin_large.py'
 
@@ -44,7 +44,7 @@ def get_cfg(epochs: int):
     cfg.log_config.hooks[1].init_kwargs.project = WANDB_PROJECT
     cfg.log_config.hooks[1].init_kwargs.entity = WANDB_ENTITY
     cfg.log_config.hooks[1].init_kwargs.name = WANDB_RUN
-    cfg.lr_config.step = [int(epochs * 0.7), int(epochs * 0.8)]
+    cfg.lr_config.step = []
     cfg.runner.max_epochs = epochs
     return cfg
 
@@ -56,8 +56,8 @@ def make_predictions(output, cfg, loc: str) -> None:
     coco = COCO(os.path.join(cfg.data_root, 'test.json'))
 
     for i, out in enumerate(output):
-        if i % 50 == 0:
-            print('Iteration', i + 1)
+        if (i + 1) % 50 == 0:
+            print('Image', i + 1, ' prediction start')
 
         image_info = coco.loadImgs(coco.getImgIds(imgIds=i))[0]
         prediction_string = ' '.join(str(pred) for pred in out)
