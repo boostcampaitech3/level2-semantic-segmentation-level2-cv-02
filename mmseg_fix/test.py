@@ -98,21 +98,28 @@ def single_gpu_test(model,
         if isinstance(result, list):
             if efficient_test:
                 result = [np2tmp(_) for _ in result]
-            for i, pred in enumerate(result):
-                image_id = img_metas[i]['ori_filename'][:4]
-                results.append(dict(id=image_id, pred=pred))
+            if inference:
+                for i, pred in enumerate(result):
+                    image_id = img_metas[i]['ori_filename'][:4]
+                    results.append(dict(id=image_id, pred=pred))
+            else:
+                results.extend(result)
         else:
             if efficient_test:
                 result = np2tmp(result)
-            image_id = img_metas[0]['ori_filename'][:4]
-            results.append(dict(id=image_id, pred=result))
+            if inference:
+                image_id = img_metas[0]['ori_filename'][:4]
+                results.append(dict(id=image_id, pred=result))
+            else:
+                results.append(result)
 
         batch_size = data['img'][0].size(0)
         for _ in range(batch_size):
             prog_bar.update()
 
-    results = sorted(results, key=lambda x: x['id'])
-    results = [x['pred'] for x in results]
+    if inference:
+        results = sorted(results, key=lambda x: x['id'])
+        results = [x['pred'] for x in results]
 
     return results
 
