@@ -27,6 +27,7 @@ def make_predictions(output, idx_order, cfg, loc: str) -> None:
         out = output[output_idx]
         prediction_string = ' '.join(str(pred) for pred in out)
         prediction_string = prediction_string.replace('[', '').replace(']', '')
+        prediction_string = prediction_string.replace('\n', '')
         file_names.append(image_info['file_name'])
         prediction_strings.append(prediction_string)
 
