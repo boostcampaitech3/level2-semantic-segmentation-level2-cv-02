@@ -23,8 +23,8 @@ model = dict(
         out_indices=[7, 11, 15, 23]),
     neck=dict(embed_dim=1024, rescales=[4, 2, 1, 0.5]),
     decode_head=dict(
-        in_channels=[1024, 1024, 1024, 1024], num_classes=10, channels=1024),
-    auxiliary_head=dict(in_channels=1024, num_classes=10),
+        in_channels=[1024, 1024, 1024, 1024], num_classes=11, channels=1024),
+    auxiliary_head=dict(in_channels=1024, num_classes=11),
     test_cfg=dict(mode='slide', crop_size=(512, 512), stride=(426, 426)))
 
 optimizer = dict(
@@ -43,7 +43,7 @@ lr_config = dict(
     warmup_iters=1000,
     warmup_ratio=1e-6,
     power=0.9,
-    min_lr=1e-9,
+    min_lr=1e-10,
     by_epoch=False)
 
 # data = dict(samples_per_gpu=1)

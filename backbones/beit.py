@@ -123,8 +123,6 @@ class BEiTAttention(BaseModule):
             x (tensor): input features with shape of (num_windows*B, N, C).
         """
         B, N, C = x.shape
-        # print("X Size check(0): ", x.shape)
-        # X Size check(0):  torch.Size([1, 1522, 1024]) => 1522:dim-2 계속 바뀜
 
         if self.bias == 'qv_bias':
             k_bias = torch.zeros_like(self.v_bias, requires_grad=False)
@@ -140,16 +138,11 @@ class BEiTAttention(BaseModule):
         if self.relative_position_bias_table is not None:
             Wh = self.window_size[0]
             Ww = self.window_size[1]
-            # print("Window Size check(1): ", Wh)
-            # print("Window Size check(2): ", Ww)
             relative_position_bias = self.relative_position_bias_table[
                 self.relative_position_index.view(-1)].view(
                     Wh * Ww + 1, Wh * Ww + 1, -1)
             relative_position_bias = relative_position_bias.permute(
                 2, 0, 1).contiguous()  # nH, Wh*Ww, Wh*Ww
-            # print("Size check(1): ", attn.shape)
-            # print("Size check(2): ", relative_position_bias.shape)
-            # print("Size check(3): ", relative_position_bias.unsqueeze(0).shape)
             attn = attn + relative_position_bias.unsqueeze(0)
         attn = attn.softmax(dim=-1)
         attn = self.attn_drop(attn)

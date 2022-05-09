@@ -2,6 +2,7 @@ import numpy as np
 import torch
 from scipy import interpolate
 
+
 def put_checkpoint(model, state_dict, cfg):
     window_size = (cfg.model.backbone.img_size[0] // cfg.model.backbone.patch_size, 
                    cfg.model.backbone.img_size[1] // cfg.model.backbone.patch_size)

@@ -7,7 +7,7 @@ img_norm_cfg = dict(
 crop_size = (512, 512)
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(type='LoadAnnotations', reduce_zero_label=True),
+    dict(type='LoadAnnotations', reduce_zero_label=False),
     # dict(type='Resize', img_scale=(512, 512), ratio_range=(0.5, 2.0)),
     dict(type='Resize', img_scale=(512, 512)),
     # dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
@@ -26,7 +26,8 @@ test_pipeline = [
         # img_ratios=[0.5, 0.75, 1.0, 1.25, 1.5, 1.75],
         flip=False,
         transforms=[
-            dict(type='Resize', keep_ratio=True),
+            # dict(type='Resize', keep_ratio=True),
+            # dict(type='Resize', img_scale=(256, 256)),
             dict(type='Normalize', **img_norm_cfg),
             # dict(type='RandomFlip', prob=0.5),
             dict(type='ImageToTensor', keys=['img']),
@@ -34,8 +35,8 @@ test_pipeline = [
         ])
 ]
 data = dict(
-    samples_per_gpu=4,
-    workers_per_gpu=4,
+    samples_per_gpu=2,
+    workers_per_gpu=0,
     train=dict(
         type=dataset_type,
         data_root=data_root,

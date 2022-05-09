@@ -1,3 +1,5 @@
+# _base_/models/upernet_beit.py
+
 norm_cfg = dict(type='SyncBN', requires_grad=True)
 model = dict(
     type='EncoderDecoder',

@@ -113,7 +113,7 @@ def parse_args():
 
 def main():
     args = parse_args()
-    wandb.init(project = 'Segmentation_Sua', entity = 'bucket_interior', name = 'BEiT_pretrained_v1')
+    wandb.init(project = 'BC-level2-Seg', entity = 'heosuab', name = 'BEiT_pretrained_v1')
 
     cfg = Config.fromfile(args.config)
     cfg.seed = 42
