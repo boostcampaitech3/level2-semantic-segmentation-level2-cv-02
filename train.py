@@ -37,9 +37,6 @@ if __name__ == '__main__':
     else:
         # Learning from the checkpoint
         assert BASE_EPOCHS > EPOCHS, "The original checkpoint will be overwritten."
-        assert BASE_EPOCHS > cfg.lr_config.step[1], "Learning rate should be considered carefully."
-        # cfg.optimizer.lr = 1e-6
-        # cfg.lr_config = None
 
         checkpoint_path = f"./epoch_{BASE_EPOCHS}.pth"
         checkpoint = load_checkpoint(model, checkpoint_path, map_location='cpu')

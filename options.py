@@ -18,9 +18,9 @@ import random
 import wandb
 
 
-WANDB_PROJECT = "trash_segmentation_nestiank"
-WANDB_ENTITY = "bucket_interior"
-WANDB_RUN = "Swin_Tuned"
+WANDB_PROJECT = None
+WANDB_ENTITY = None
+WANDB_RUN = None
 
 CONFIG_PATH = '/opt/ml/input/code/configs/modified_swin_large.py'
 
@@ -57,7 +57,7 @@ def make_predictions(output, cfg, loc: str) -> None:
 
     for i, out in enumerate(output):
         if (i + 1) % 50 == 0:
-            print('Image', i + 1, ' prediction start')
+            print('Image', i + 1, 'prediction start')
 
         image_info = coco.loadImgs(coco.getImgIds(imgIds=i))[0]
         prediction_string = ' '.join(str(pred) for pred in out)
