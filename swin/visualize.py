@@ -42,5 +42,4 @@ if __name__ == '__main__':
             for rgb in range(3):
                 mask[i][j][rgb] = PALETTE[int(predictions[i * 256 + j])][rgb]
 
-    mask = mask.astype(np.int8)
     cv2.imwrite(f"./visualization/{args.file_name}_image{args.image_id}.png", mask)
