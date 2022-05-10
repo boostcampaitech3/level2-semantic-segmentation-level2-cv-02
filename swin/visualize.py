@@ -32,7 +32,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     predictions = pd.read_csv(f"./{args.file_name}.csv")
-    predictions = predictions['PredictionString'][args.image_id - 1].split(' ')
+    predictions = predictions['PredictionString'][args.image_id - 1].replace('  ', ' ').split(' ')
 
     assert len(predictions) == 256 * 256
 
