@@ -1,0 +1,9 @@
+epoch: 200
+batch_size: 4
+num_worker: 8
+classes: 11
+lr: 0.0001
+decoder: FPN # Unet, UnetPlusPlus, DeepLabV3, DeepLabV3Plus
+encoder: timm-efficientnet-b4 
+encoder_weights: imagenet # imagenet / advprop / noisy-student
+criterion: focal # dice / CE / focal / softCE
