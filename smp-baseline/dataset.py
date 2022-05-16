@@ -8,7 +8,6 @@ from pycocotools.coco import COCO
 from albumentations.pytorch import ToTensorV2
 from sklearn.model_selection import KFold
 
-fold = 4
 dataset_path = '/opt/ml/input/data'
 
 
