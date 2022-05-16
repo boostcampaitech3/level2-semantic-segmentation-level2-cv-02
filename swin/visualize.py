@@ -32,7 +32,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     predictions = pd.read_csv(f"./{args.file_name}.csv")
-    predictions = predictions['PredictionString'][args.image_id - 1].split(' ')
+    predictions = predictions['PredictionString'][args.image_id - 1].replace('  ', ' ').split(' ')
 
     assert len(predictions) == 256 * 256
 
@@ -42,5 +42,4 @@ if __name__ == '__main__':
             for rgb in range(3):
                 mask[i][j][rgb] = PALETTE[int(predictions[i * 256 + j])][rgb]
 
-    mask = mask.astype(np.int8)
     cv2.imwrite(f"./visualization/{args.file_name}_image{args.image_id}.png", mask)
